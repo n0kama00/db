@@ -3,7 +3,7 @@
 function createDbConnection(){
 
     try{
-        $dbcon = new PDO('mysql:host=localhost:3307;dbname=n0kama00', 'root', '');
+        $dbcon = new PDO('mysql:host=localhost;dbname=n0kama00', 'root', '');
         $dbcon->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         createTable($dbcon);
     }catch(PDOException $e){
@@ -19,16 +19,16 @@ function checkUser(PDO $dbcon, $username, $passwd){
     $passwd = filter_var($passwd, FILTER_SANITIZE_STRING);
 
     try{
-        $sql = "SELECT password FROM user WHERE username=?";  //komento, arvot parametreina
-        $prepare = $dbcon->prepare($sql);   //valmistellaan
-        $prepare->execute(array($username));  //kysely tietokantaan
+        $sql = "SELECT password FROM user WHERE username=?";  
+        $prepare = $dbcon->prepare($sql);  
+        $prepare->execute(array($username));  
 
-        $rows = $prepare->fetchAll(); //haetaan tulokset
+        $rows = $prepare->fetchAll(); 
 
         //Käydään rivit läpi
         foreach($rows as $row){
-            $pw = $row["password"];  //password sarakkeen tieto (hash salasana tietokannassa)
-            if( password_verify($passwd, $pw) ){  //tarkistetaan salasana tietokannan hashia vasten
+            $pw = $row["password"];  
+            if( password_verify($passwd, $pw) ){ 
                 return true;
             }
         }

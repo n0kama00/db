@@ -1,13 +1,5 @@
 <?php
 
-/**
- * Tämä tiedosto hoitaa login-toiminnon. Login tarkistaa on basic auth otsikko asetettu.
- * Tämän jälkeen tarkistetaan löytyykö otsikon käyttäjätunnus ja salasana tietokannasta.
- * Jos löytyy, palautetaan clientille ok ja lisäksi JWT token.
- * 
- * JTW työkalut on lisätty headers.php-tiedostoon (fb-kansiossa itse kirjasto)
- */
-
 use Firebase\JWT\JWT;
 
 require('headers.php');
@@ -36,8 +28,7 @@ if( isset($_SERVER['PHP_AUTH_USER']) ){
     }
 }
 
-//Login ei onnistunut
-//Käyttäjälle unauhtorized-otsikko sekä JSONissa info epäonnistumisesta
+//Failed login
 echo '{"info":"Kirjautuminen epäonnistui"}';
 header('Content-Type: application/json');
 header('HTTP/1.1 401');
